@@ -20,7 +20,7 @@ def getFilename_fromCd(cd):
 
 
 headers={'User-Agent': 'python-requests/2.26.0'}
-ROOT_DIR='G:\\My Drive\\Sem-4\\'
+ROOT_DIR=''#enter your root directory here to create the subfolders of the course files
 
 with requests.Session() as s:
 
@@ -32,7 +32,7 @@ with requests.Session() as s:
     lis=soup.find_all('input',{'type':'hidden'})
 
     var=lis[0].attrs['value']
-    payload = {'username': '160120737114', 'password': 'Wasdijkl123@', 'logintoken': var} #give here your original lms credentials
+    payload = {'username': '', 'password': '', 'logintoken': var} #give here your original lms credentials
     post = s.post('https://learning.cbit.org.in/login/index.php', data=payload)
     while(1):
         a= input('enter your course name to fetch the details')
