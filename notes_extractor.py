@@ -20,6 +20,7 @@ def getFilename_fromCd(cd):
 
 
 headers={'User-Agent': 'python-requests/2.26.0'}
+ROOT_DIR='G:\\My Drive\\Sem-4\\'
 
 with requests.Session() as s:
 
@@ -35,6 +36,7 @@ with requests.Session() as s:
     post = s.post('https://learning.cbit.org.in/login/index.php', data=payload)
     while(1):
         a= input('enter your course name to fetch the details')
+        folder=a
         course_name=a
         course_payload={'areaids':'core_course-course','q':a}
         course_post=s.get('https://learning.cbit.org.in/course/search.php',params=course_payload)
@@ -146,11 +148,16 @@ with requests.Session() as s:
                         #   f.write(r.content)
                         filename = getFilename_fromCd(r.headers.get('content-disposition')).strip()
 
-                        arr = course_name+'/'+filename[1:len(filename) - 1]
-
-                        with open(arr, 'wb') as f:
-                            f.write(r.content)
-                            print(lis[inpu].find('a').text + ' status - succesfully downloaded')
+                        arr = ROOT_DIR+folder+'\\'+filename[1:len(filename) - 1]
+                        try:
+                                with open(arr, 'wb') as f:
+                                    f.write(r.content)
+                                    print(lis[inpu].find('a').text + ' status - succesfully downloaded')
+                        except FileNotFoundError:
+                            os.mkdir(ROOT_DIR+folder)
+                            with open(arr, 'wb') as f:
+                                f.write(r.content)
+                                print(lis[inpu].find('a').text + ' status - succesfully downloaded')
             if(inpu==0):
                 break
 
